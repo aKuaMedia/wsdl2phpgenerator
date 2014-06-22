@@ -137,7 +137,7 @@ class wsdl2phpOperation
         if ($type instanceof wsdl2phpPattern)
         {
           $ret['type'] = $type->getDatatype();
-          $ret['desc'] = _('Restriction pattern: ').$type->getValue();
+          $ret['desc'] = 'Restriction pattern: '.$type->getValue();
         }
         else
         {
@@ -145,7 +145,7 @@ class wsdl2phpOperation
 
           if ($type instanceof wsdl2phpEnum)
           {
-            $ret['desc'] = _('Constant: ').$type->getDatatype();
+            $ret['desc'] = 'Constant: '.$type->getDatatype();
           }
         }
       }

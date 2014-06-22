@@ -108,13 +108,13 @@ class wsdl2phpGenerator
   {
     $this->config = $config;
 
-    $this->log(_('Starting generation'));
+    $this->log('Starting generation');
 
     $this->load();
 
     $this->savePhp();
 
-    $this->log(_('Generation complete'));
+    $this->log('Generation complete');
   }
 
   /**
@@ -126,7 +126,7 @@ class wsdl2phpGenerator
 
     try
     {
-      $this->log(_('Loading the wsdl'));
+      $this->log('Loading the wsdl');
       $this->client = new SoapClient($wsdl, array('cache_wsdl' => WSDL_CACHE_NONE));
     }
     catch(SoapFault $e)
@@ -134,7 +134,7 @@ class wsdl2phpGenerator
       throw new Exception('Error connectiong to to the wsdl. Error: '.$e->getMessage());
     }
 
-    $this->log(_('Loading the DOM'));
+    $this->log('Loading the DOM');
     $this->dom = DOMDocument::load($wsdl);
 
     $this->documentation->loadDocumentation($this->dom);
@@ -152,7 +152,7 @@ class wsdl2phpGenerator
   {
     $name = $this->dom->getElementsByTagNameNS('*', 'service')->item(0)->getAttribute('name');
 
-    $this->log(_('Starting to load service ').$name);
+    $this->log('Starting to load service '.$name);
 
     $this->service = new wsdl2phpService($name, $this->types, $this->documentation->getServiceDescription());
 
@@ -178,12 +178,12 @@ class wsdl2phpGenerator
         throw new wsdl2phpException('Invalid function call: '.$function);
       }
 
-      $this->log(_('Loading function ').$function);
+      $this->log('Loading function '.$function);
 
       $this->service->addOperation($function, $params, $this->documentation->getFunctionDescription($function));
     }
 
-    $this->log(_('Done loading service ').$name);
+    $this->log('Done loading service '.$name);
   }
 
   /**
@@ -193,7 +193,7 @@ class wsdl2phpGenerator
    */
   private function loadTypes()
   {
-    $this->log(_('Loading types'));
+    $this->log('Loading types');
 
     $types = $this->client->__getTypes();
 
@@ -216,7 +216,7 @@ class wsdl2phpGenerator
       if ($numParts > 1)
       {
         $type = new wsdl2phpComplexType($className);
-        $this->log(_('Loading type ').$type->getPhpIdentifier());
+        $this->log('Loading type '.$type->getPhpIdentifier());
 
         for($i = 1; $i < $numParts - 1; $i++)
         {
@@ -240,7 +240,7 @@ class wsdl2phpGenerator
           if ($enumerationList->length > 0)
           {
             $type = new wsdl2phpEnum($className, $restriction);
-            $this->log(_('Loading enum ').$type->getPhpIdentifier());
+            $this->log('Loading enum '.$type->getPhpIdentifier());
             foreach ($enumerationList as $enum)
             {
               $type->addValue($enum->attributes->getNamedItem('value')->nodeValue);
@@ -249,7 +249,7 @@ class wsdl2phpGenerator
           else if ($patternList->length > 0)// If pattern
           {
             $type = new wsdl2phpPattern($className, $restriction);
-            $this->log(_('Loading pattern ').$type->getPhpIdentifier());
+            $this->log('Loading pattern '.$type->getPhpIdentifier());
             $type->setValue($patternList->item(0)->attributes->getNamedItem('value')->nodeValue);
           }
           else
@@ -265,7 +265,7 @@ class wsdl2phpGenerator
       }
     }
 
-    $this->log(_('Done loading types'));
+    $this->log('Done loading types');
   }
 
   /**

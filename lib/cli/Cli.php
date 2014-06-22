@@ -144,14 +144,14 @@ class cliCli extends cliCliParser
    */
   public function showUsage()
   {
-    print _('Usage: ').$this->programName.' '.$this->usageString.PHP_EOL;
+    print 'Usage: '.$this->programName.' '.$this->usageString.PHP_EOL;
 
     foreach ($this->acceptedFlags as $flag)
     {
       print $flag;
     }
 
-    print _('Version: ').$this->version.PHP_EOL;
+    print 'Version: '.$this->version.PHP_EOL;
 
     print PHP_EOL;
     exit;
@@ -170,7 +170,7 @@ class cliCli extends cliCliParser
     // Add the help flag if not defined
     if (array_key_exists('-h', $this->acceptedFlags) === false)
     {
-      $this->acceptedFlags['-h'] = new cliFlag('-h', _('Help'), true);
+      $this->acceptedFlags['-h'] = new cliFlag('-h', 'Help', true);
     }
 
     if ($this->getValue('-h'))
@@ -193,7 +193,7 @@ class cliCli extends cliCliParser
 
         if ($showError)
         {
-          print _('Required parameter missing!').PHP_EOL;
+          print 'Required parameter missing!'.PHP_EOL;
           $this->showUsage();
         }
       }
@@ -207,7 +207,7 @@ class cliCli extends cliCliParser
       {
         if ($flag->isBool() === false && $value === true)
         {
-          print _('A flag that must have a parameter does not').PHP_EOL;
+          print 'A flag that must have a parameter does not'.PHP_EOL;
           $this->showUsage();
         }
       }
